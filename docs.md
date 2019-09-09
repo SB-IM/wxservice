@@ -129,17 +129,19 @@ $ curl http://localhost:3000/api/v1/user/ -H "Authorization: Bearer <token>"
 id: 123 <unique ID. 每个 report 都是唯一的>
 user_id: 1 <这个可能没有（不存在），因为有定时自动执行的情况>
 group_id: 1 <根据这个来决定向哪些用户推送>
-plan_id: 1
-plan_name: ""
-plan_description: ""
+plan[id]: 1
+plan[name]: ""
+plan[description]: ""
 
 // 结果文件，可能有多个。如果是图片就显示出来。文件就提供下载按钮。（会有特殊格式的图片，比如 tif 格式的图片，也要显示出来）
 // results 里的键值可能是不固定的，也可能没有。。。没有是中途某个流程出错了。
 results[]
 
-// 目前要显示有两个文件
-// 1. map 文件（csv 格式。前端解析在地图上绘制）。要可以切换地图 google 和 amap
-// 2. orthomosaic 文件（tif 格式。行业标准直接覆盖到地图上）。要可以切换地图 google 和 amap
+// 目前要显示一共有 4 种类型
+// 1. results[mission] map 文件（csv 格式。前端解析在地图上绘制）。使用 amap 。文件格式参考：https://mavlink.io/en/file_formats/
+// 2. results[orthomosaic] 文件（tif 格式。行业标准直接覆盖到地图上）。使用 amap
+// 3. results[jpg] jpg 文件直接显示
+// 4. results[iframe] 纯文本 只有一个 url 。example: `https://baidu.com`
 
 ```
 
