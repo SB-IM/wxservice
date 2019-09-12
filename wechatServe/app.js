@@ -17,6 +17,7 @@ new Promise(res=>{
   });
 }).then(data=>{
   global.apiUrl=data.apiUrl   
+  global.Post=data.Post // 监听的端口号
   global.appId=data.appId   // 公众号appid
   global.secret=data.secret   // 公众号密钥  
   global.client_id=data.client_id 
@@ -62,9 +63,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
- const post=4000
  app.listen(post,function(){
-   console.log(`Server Connected : ${post}`)
+   console.log(`Server Connected : ${Post}`)
  })
 
 

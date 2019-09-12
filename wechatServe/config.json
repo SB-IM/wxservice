@@ -3,5 +3,6 @@
     "secret":"b5f760bfd768a75cd1c59ea1a327374e",
     "apiUrl":"https://staging.sblab.xyz",
     "client_id":"21bb71921d7c34180051d3166a6121f21c531134d139370d69b9c917b99d4457",
-    "client_secret":"9eafb2591725957e3dee836399b2d43762d889dab5e1d7900e0800d9fec463ca"
+    "client_secret":"9eafb2591725957e3dee836399b2d43762d889dab5e1d7900e0800d9fec463ca",
+    "Post":"4000"
 }
