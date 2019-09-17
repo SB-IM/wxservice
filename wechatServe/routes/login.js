@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const request = require('request')
-const multer = require('multer')
-
+var request = require('request')
+var multer = require('multer')
+var upload = multer({ dest: '../file' })
+express.use(upload.fields('fields'))
 // 获取无人机的微信授权,获取openid
 router.get('/openid', function (req, res, next) {
     console.log(req.query.code)
@@ -14,7 +15,8 @@ router.get('/openid', function (req, res, next) {
     }, (err, resd, body) => {
         let openid = JSON.parse(body).openid  
         let access_token=JSON.parse(body).access_token
-        res.redirect('/?openid=' + openid)   // 重定向并携带openid（如需后续操作需用到openid
+        let REDIRECT_URL=``  // 重定向的url
+        res.redirect(`${REDIRECT_URL}?openid=${openid}`)   // 重定向并携带openid（如需后续操作需用到openid
     })
     // res.send(`body`)
 });
@@ -72,8 +74,11 @@ router.post('/login', (req, result) => {
 
 // 接收webhook接口
 router.post('/api/v1/webhook', (req, res) => {
-    
-
+    console.log(req.body)   //数据列表
+    console.log(req.files)  // 文件列表
+    /*
+    后续进行数据库操作，前端请求显示数据库信息
+    */
 })
 
 //send 微信推送
