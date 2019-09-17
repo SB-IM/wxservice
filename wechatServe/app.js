@@ -64,10 +64,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-const readlineaa = require('./methods/getMapPath');
-readlineaa("./file/plan_11.waypoints",(arr)=>{
-  console.log(arr)
-})
 app.listen(4000, function () {
   console.log(`Server Connected : 4000`)
 })
