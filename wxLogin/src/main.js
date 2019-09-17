@@ -39,7 +39,7 @@ Vue.prototype.$URL=function(url){
 let AMAP_KEY=require('./config.json').AMAP_KEY
 console.log(AMAP_KEY)
 VueAMap.initAMapApiLoader({
-  key: 'cce220834c0ed78be433438d8a921e47',
+  key: AMAP_KEY,
   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
   v: '1.4.4'
 })
