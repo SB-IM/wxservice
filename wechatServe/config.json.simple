@@ -1,8 +1,8 @@
 {
-    "appId":"",
-    "secret":"",
-    "apiUrl":"",
-    "client_id":"",
-    "client_secret":"",
-    "Post":""
+    "appId":"xxxxx",
+    "secret":"xxxxx",
+    "apiUrl":"xxxxx",
+    "client_id":"xxxxx",
+    "client_secret":"xxxxx",
+    "Post":"xxxx"
 }

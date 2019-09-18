@@ -3,12 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const request = require('request')
+var request = require('request')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var login = require('./routes/login');
-const fs = require('fs')
+var fs = require('fs')
 var app = express();
+var bodyParser = require('body-parser');
 // 读取配置文件
 new Promise(res => {
   fs.readFile('./config.json', 'utf-8', (err, data) => {
@@ -26,6 +27,8 @@ new Promise(res => {
     return data.apiUrl + post
   }
 })
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //设置跨域访问
 app.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
@@ -34,11 +37,12 @@ app.all('*', function (req, res, next) {
   res.header("ACCess-Control-Allow-Headers", "Content-Type,username");
   next();
 });
+
+
 // view engine setup
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -64,10 +68,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-const readlineaa = require('./methods/getMapPath');
-readlineaa("./file/plan_11.waypoints",(arr)=>{
-  console.log(arr)
-})
 app.listen(4000, function () {
   console.log(`Server Connected : 4000`)
 })

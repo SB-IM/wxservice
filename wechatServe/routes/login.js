@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request')
 var multer = require('multer')
-var upload = multer({ dest: '../file' })
-express.use(upload.fields('fields'))
+var fs = require('fs')
 // 获取无人机的微信授权,获取openid
 router.get('/openid', function (req, res, next) {
     console.log(req.query.code)
@@ -13,9 +12,9 @@ router.get('/openid', function (req, res, next) {
         url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appId + '&secret=' + secret + '&code=' + code + '&grant_type=authorization_code',
         method: 'GET'
     }, (err, resd, body) => {
-        let openid = JSON.parse(body).openid  
-        let access_token=JSON.parse(body).access_token
-        let REDIRECT_URL=``  // 重定向的url
+        let openid = JSON.parse(body).openid
+        let access_token = JSON.parse(body).access_token
+        let REDIRECT_URL = ``  // 重定向的url
         res.redirect(`${REDIRECT_URL}?openid=${openid}`)   // 重定向并携带openid（如需后续操作需用到openid
     })
     // res.send(`body`)
@@ -73,29 +72,55 @@ router.post('/login', (req, result) => {
 })
 
 // 接收webhook接口
-router.post('/api/v1/webhook', (req, res) => {
-    console.log(req.body)   //数据列表
-    console.log(req.files)  // 文件列表
+router.post('/api/v1/webhook', multer({
+    dest: 'file'
+}).array('file', 10), (req, res) => {
+    let message = req.body; // 传过来的数据列表
+    let files = req.files;  // 传过来的文件列表  
+    if (files.length === 0) {
+        res.json("上传文件为空！");
+        return
+    } else {
+        let fileInfos = [];
+        for (var i in files) {
+            let file = files[i];
+            let fileInfo = {};
+            fs.renameSync('./file/' + file.filename, './file/' + file.originalname);// 这里修改文件名。
+            // 获取文件基本信息
+            fileInfo.mimetype = file.mimetype;
+            fileInfo.originalname = file.originalname;
+            fileInfo.size = file.size;
+            fileInfo.path = file.path;
+            fileInfos.push(fileInfo);
+        }
+        // 文件已能正常保存至file目录
+        // 设置响应类型及编码
+        res.set({
+            'content-type': 'application/json; charset=utf-8'
+        });
+        res.json("success!");
+    }
     /*
-    后续进行数据库操作，前端请求显示数据库信息
+    后续进行数据库操作，前端请求显示数据库信息 
+    （ 已测试都能接收到各类数据，接受数据 => 数据以及文件url存库 => 调用下方的send方法推送 / 前端访问 => 根据id号渲染这条信息的报告
     */
 })
 
 //send 微信推送
-function send(access_token,openid,template_id){
-    const url=`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${access_token}`
+function send(access_token, openid, template_id) {
+    const url = `https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${access_token}`
     const requestData = { //发送模板消息的数据
         touser: openid,
         template_id: template_id,
         url: 'http://weixin.qq.com/download'
-        }
+    }
     request({
-        url:url,
+        url: url,
         method: 'POST',
-        body:JSON.stringify(requestData),
-    },(err,response,body)=>{
+        body: JSON.stringify(requestData),
+    }, (err, response, body) => {
         console.log(body)
     })
-  }
+}
 
 module.exports = router

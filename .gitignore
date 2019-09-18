@@ -62,3 +62,9 @@ typings/
 
 # wechatServe configuration file
 wechatServe/config.json
+
+# wxLogin configuration file
+wxLogin/src/config.json
+
+# wechatServe  receive files
+wechatServe/file
