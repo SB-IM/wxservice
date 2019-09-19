@@ -15,6 +15,7 @@ var project = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'u
 global.K_config = project
 global.urls = function (post) {
   return project.apiUrl + post
+  
 }
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
