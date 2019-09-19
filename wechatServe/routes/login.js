@@ -9,7 +9,7 @@ router.get('/openid', function (req, res, next) {
     let code = req.query.code  //前端授权传过来的code，用作跟微信服务器换取openid
     // 第一步，获取access_token and openid
     request({
-        url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appId + '&secret=' + secret + '&code=' + code + '&grant_type=authorization_code',
+        url:`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${K_config.appId}&secret=${K_config.secret}&code=${code}&grant_type=authorization_code`,
         method: 'GET'
     }, (err, resd, body) => {
         let openid = JSON.parse(body).openid
@@ -31,8 +31,8 @@ router.post('/login', (req, result) => {
             grant_type: "password",
             username: userName,  // "sb@sb.im"
             password: passWord,  // 123456
-            client_id: client_id,
-            client_secret: client_secret
+            client_id: K_config.client_id,
+            client_secret: K_config.client_secret
         }
     }, async (err, res, body) => {
         let data = JSON.parse(body)

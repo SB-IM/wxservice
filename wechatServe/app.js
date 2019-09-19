@@ -11,24 +11,13 @@ var fs = require('fs')
 var app = express();
 var bodyParser = require('body-parser');
 // 读取配置文件
-new Promise(res => {
-  fs.readFile('./config.json', 'utf-8', (err, data) => {
-    var config = JSON.parse(data)
-    res(config)
-  });
-}).then(data => {
-  global.apiUrl = data.apiUrl
-  global.Post = data.Post // 监听的端口号
-  global.appId = data.appId   // 公众号appid
-  global.secret = data.secret   // 公众号密钥  
-  global.client_id = data.client_id
-  global.client_secret = data.client_secret
-  global.urls = function (post) {
-    return data.apiUrl + post
-  }
-})
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+var project = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8'));
+global.K_config = project
+global.urls = function (post) {
+  return project.apiUrl + post
+}
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 //设置跨域访问
 app.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
@@ -68,7 +57,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(4000, function () {
+app.listen(K_config.Post, function () {
   console.log(`Server Connected : 4000`)
 })
 
