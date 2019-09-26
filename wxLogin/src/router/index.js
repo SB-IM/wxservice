@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login'
-import map from '@/components/map'
+import Presentation from '@/components/Presentation'
 Vue.use(Router)
 
 export default new Router({
@@ -12,9 +12,9 @@ export default new Router({
       component: login
     },
     {
-      path: '/map',
-      name: 'map',
-      component: map
+      path: '/Presentation',
+      name: 'Presentation',
+      component: Presentation
     }
   ]
 })
