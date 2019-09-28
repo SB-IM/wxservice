@@ -1,16 +1,12 @@
 <template>
   <div>
     <div v-if="isWeiXin()" class="mask">
-      <p class="text">
-        请点击右上角，选择使用手机自带浏览器打开
-      </p>
+      <p class="text">请点击右上角，选择使用手机自带浏览器打开</p>
     </div>
-    <div class="PresentationTitle">
-      数据报告
-    </div>
+    <div class="PresentationTitle">数据报告</div>
     <div class="textWord">
       <p class="title">文本内容:</p>
-      <p>文本文本文本</p>
+      <iframe class="text_url" src="http://www.baidu.com" frameborder="0"></iframe>
     </div>
     <div class="fileDownLoad">
       <p class="title">文件下载:</p>
@@ -44,7 +40,7 @@ import VueAMap from "vue-amap";
 export default {
   data() {
     return {
-      openid:'',
+      openid: "",
       amapManager: new VueAMap.AMapManager(),
       center: [114.224864, 22.687672],
       events: {
@@ -102,15 +98,15 @@ export default {
   },
   created() {
     let _this = this;
-    let url= window.location.href
-     if(url.split('?').length==1){
-         let redirect_uri=`https://www.funnywork.com/mapOpenid`  // 回调地址，后端授权接口
-         window.location.href=`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b0fff5710013995&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`
-     }else{
-           let openid=url.split('?')[1].split('=')[1]
-           this.openid=openid
-           console.log(`openid`,openid)
-     }
+    let url = window.location.href;
+    if (url.split("?").length == 1) {
+      let redirect_uri = `https://www.funnywork.com/mapOpenid`; // 回调地址，后端授权接口
+      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b0fff5710013995&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
+    } else {
+      let openid = url.split("?")[1].split("=")[1];
+      this.openid = openid;
+      console.log(`openid`, openid);
+    }
     _this.polyline.path = [
       [114.224864, 22.687672],
       [114.2248576, 22.6876944],
@@ -124,7 +120,7 @@ export default {
       [114.2247936, 22.8876464],
       [114.2247936, 22.9876464],
       [114.3247936, 22.9876464],
-      [114.2247936, 22.3876464],
+      [114.2247936, 22.3876464]
     ];
   },
   methods: {
@@ -146,21 +142,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
-.PresentationTitle{
+.PresentationTitle {
   font-size: 0.8rem;
   text-align: center;
   padding: 0.2rem 0 0.8rem 0;
 }
-.amap-box{
-  margin-top: 0.5rem
+.amap-box {
+  margin-top: 0.5rem;
 }
-.title{
-  font-size: 0.4rem
+.title {
+  font-size: 0.4rem;
 }
 .amap {
   width: 100%;
   height: 40vh;
-  margin-top: 0.1rem
+  margin-top: 0.1rem;
 }
 .DonwnLoad {
   width: 3rem;
@@ -173,7 +169,7 @@ export default {
   font-size: 0.34rem;
   text-align: center;
 }
-.mask{
+.mask {
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -182,18 +178,21 @@ export default {
   background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
 }
-.mask .text{
+.mask .text {
   font-size: 0.6rem;
   color: white;
   padding: 0.5rem;
   margin-top: 0.2rem;
-  letter-spacing: 0.05rem
-
+  letter-spacing: 0.05rem;
 }
-.textWord{
+.textWord {
   font-size: 0.4rem;
 }
-.fileDownLoad{
-  margin-top: 0.5rem
+.fileDownLoad {
+  margin-top: 0.5rem;
+}
+.text_url {
+  width: 100vw;
+  height: 5rem;
 }
 </style>

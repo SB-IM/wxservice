@@ -1,0 +1,8 @@
+{
+    "appId":"xxxxx",    // String
+    "secret":"xxxxx",   // String
+    "apiUrl":"xxxxx",   // String
+    "client_id":"xxxxx",    // String
+    "client_secret":"xxxxx",    // String
+    "Post":"xxxx"   // Number
+}   

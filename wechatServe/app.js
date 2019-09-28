@@ -17,8 +17,10 @@ global.urls = function (post) {
   return project.apiUrl + post
   
 }
+
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 //设置跨域访问
 app.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", "true");
@@ -27,7 +29,6 @@ app.all('*', function (req, res, next) {
   res.header("ACCess-Control-Allow-Headers", "Content-Type,username");
   next();
 });
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,7 +60,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(K_config.Post, function () {
-  console.log(`Server Connected : 4000`)
+  console.log(`Server Connected : ${K_config.Post}`)  // 启动成功回调
 })
 
 
