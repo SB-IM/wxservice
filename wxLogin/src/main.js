@@ -31,7 +31,7 @@ document.documentElement.style.fontSize = deviceWidth / 7.5 + "px";
 
 //封装域名
 Vue.prototype.$URL=function(url){
-  let post='https://www.funnywork.com'
+  let post=require('./config.json').POST
   return post + url
 }
 

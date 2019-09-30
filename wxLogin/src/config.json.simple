@@ -1,3 +1,4 @@
 {
-    "AMAP_KEY":""
+    "AMAP_KEY":"",
+    "POST":""   //接口域名 String
 }

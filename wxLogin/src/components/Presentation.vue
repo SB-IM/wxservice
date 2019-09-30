@@ -101,7 +101,8 @@ export default {
     let url = window.location.href;
     if (url.split("?").length == 1) {
       let redirect_uri = `https://www.funnywork.com/mapOpenid`; // 回调地址，后端授权接口
-      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b0fff5710013995&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
+      let appID = require("../config.json").appid;
+      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appID}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
     } else {
       let openid = url.split("?")[1].split("=")[1];
       this.openid = openid;
@@ -123,6 +124,9 @@ export default {
       [114.2247936, 22.3876464]
     ];
   },
+  mounted() {
+    this.getMsg();
+  },
   methods: {
     //判断是否是微信浏览器的函数
     isWeiXin() {
@@ -134,6 +138,11 @@ export default {
       } else {
         return false;
       }
+    },
+    getMsg() {
+      this.$http.post("http://localhost:4000/login/login").then(res => {
+        console.log(res);
+      });
     }
   }
 };

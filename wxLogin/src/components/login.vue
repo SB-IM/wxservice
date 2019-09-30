@@ -29,10 +29,8 @@ export default {
     let url = window.location.href;
     if (url.split("?").length == 1) {
       let redirect_uri = `https://www.funnywork.com/openid`; // 回调地址，后端授权接口
-      window.location.href =
-        "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8b0fff5710013995&redirect_uri=" +
-        redirect_uri +
-        "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+      let appID = require("../config.json").appid;
+      window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appID}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`;
     } else {
       let openid = url.split("?")[1].split("=")[1];
       this.openid = openid;

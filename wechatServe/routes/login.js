@@ -3,13 +3,15 @@ var router = express.Router();
 var request = require('request')
 var multer = require('multer')
 var fs = require('fs')
+require('../methods/connect') // 连接数据库
+
 // 获取无人机的微信授权,获取openid
 router.get('/openid', function (req, res, next) {
     console.log(req.query.code)
     let code = req.query.code  //前端授权传过来的code，用作跟微信服务器换取openid
     // 第一步，获取access_token and openid
     request({
-        url:`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${K_config.appId}&secret=${K_config.secret}&code=${code}&grant_type=authorization_code`,
+        url: `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${K_config.appId}&secret=${K_config.secret}&code=${code}&grant_type=authorization_code`,
         method: 'GET'
     }, (err, resd, body) => {
         let openid = JSON.parse(body).openid
