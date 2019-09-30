@@ -8,13 +8,13 @@ Vue.prototype.$http = axios;
 Vue.config.productionTip = false
 import VueAMap from 'vue-amap';
 import { Field } from 'vant';
-import 'vant/lib/Field/style';
+import 'vant/lib/field/style';
 import { Button } from 'vant';
 import 'vant/lib/button/style';
 import { Dialog } from 'vant';
-import 'vant/lib/Dialog/style';
+import 'vant/lib/dialog/style';
 import { Toast } from 'vant';
-import 'vant/lib/Toast/style';
+import 'vant/lib/toast/style';
 Vue.use(Toast);
 // 全局注册
 Vue.use(Dialog);
